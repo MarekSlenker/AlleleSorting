@@ -1,5 +1,29 @@
 # AlleleSorting
 
+
+The R scripts for automated sorting of alleles to distinct homeologs as done in [Šlenker et al. 2021](https://www.frontiersin.org/articles/). Currently, we are able to sort alleles of suspected allotetraploid. However, future developments will focus on resolving genomes of higher ploidy levels as well as autopolyploids.
+
+
+### Software Dependencies
+R: https://www.r-project.org/  
+
+
+Following packages are required: `ape`, `seqinr`, and `filelock`. Within `R` command line started in `AlleleSorting` directory use e.g. command
+```R
+install.packages(pkgs=c("ape", "seqinr", "filelock"),
+lib="rpackages", repos="https://mirrors.nic.cz/R/", dependencies="Imports")
+```
+to install needed packages.
+
+### Installation
+You can download this repository zipped (button on the right-hand side of the screen) or, if you have git installed on your system, clone it with:
+
+```bash
+git clone https://github.com/MarekSlenker/AlleleSorting.git
+```
+
+
+
 zarovnane sakvencie
 ocakavany format, alely su oznacene ako <sample_name>-h1, <sample_name>-h2, <sample_name>-h3, <sample_name>-h4
 
