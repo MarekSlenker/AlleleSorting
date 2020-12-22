@@ -4,14 +4,26 @@
 The R scripts for automated sorting of alleles to distinct homeologs as done in [Šlenker et al. 2021](https://www.frontiersin.org/articles/). Currently, we are able to sort alleles of suspected allotetraploid. However, future developments will focus on resolving genomes of higher ploidy levels as well as autopolyploids.
 
 
+## Identifying homeologs inherited from different parents
+
+The first step is to find two pairs of alleles (sequences), in which the alleles are closest to each other within the pairs while more distant between the pairs. Interallelic distances are estimated from the branch lengths of the corresponding ML tree (computed by `cophenetic` function of R base package `stats`).
+
+
+
+
+
+
+
+The optimal threshold for unequivocal allele sorting was set to 4. This means that if an average distance between alleles within the proposed two pairs was more than four-time shorter than the average distance between alleles within any other possible arrangements, these pairs of alleles were considered to be unequivocally different and attributable to different homeologs. If the allele sorting did not pass the desired threshold, interallelic SNPs were masked by using Ns on those positions (for further concatenation to gene alignments, see below) or the sample was removed from the alignment (for exon-based analyses). As next, the allele pairs were attributed to different homeologs and labelled by calculating their distances to the alleles of all diploid species. The allele pair that was closer to C. amara (proposed as the maternal parent according to the plastid phylogeny, see below) was marked as homoelog ‘A’ and the other as homeolog ‘B’. Gene alignments were also assembled, in which the respective exons were concatenated to genes to obtain longer alignments with potentially higher phylogenetic signal. The concatenated exons included those with successfully sorted alleles into ‘A’ and ‘B’ homeologs, and those for which allele sorting was equivocal, with masked interallelic SNPs. After exon concatenation, the allele sorting into two homeologs was verified for each gene, with the same threshold as set for the exons above, to confirm unambiguity, or to remove the equivocal sample from the gene alignments. Both exon-based and gene-based alignments were used for species tree inference in ASTRAL-III. The labelled homeologs, representing the two subgenomes within C. barbaraeoides, were treated as independent accessions. Used scripts are available at http://github.com/MarekSlenker/AlleleSorting...(?). 
+
+
 ### Software Dependencies
 R: https://www.r-project.org/  
 
 
-Following packages are required: `ape`, `seqinr`, and `filelock`. Within `R` command line started in `AlleleSorting` directory use e.g. command
+Following packages are required: `ape`, `seqinr`, and `filelock`. Within `R` command line use e.g. command
 ```R
-install.packages(pkgs=c("ape", "seqinr", "filelock"),
-lib="rpackages", repos="https://mirrors.nic.cz/R/", dependencies="Imports")
+install.packages(pkgs=c("ape", "seqinr", "filelock"), repos="https://mirrors.nic.cz/R/", dependencies="Imports")
 ```
 to install needed packages.
 
@@ -22,6 +34,7 @@ You can download this repository zipped (button on the right-hand side of the sc
 git clone https://github.com/MarekSlenker/AlleleSorting.git
 ```
 
+##################################################################################xx
 
 
 zarovnane sakvencie
