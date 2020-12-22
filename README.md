@@ -6,10 +6,7 @@ The R scripts for automated sorting of alleles to distinct homeologs as done in 
 
 ## Identifying homeologs inherited from different parents
 
-The first step is to find two pairs of alleles (sequences), in which the alleles are closest to each other within the pairs while more distant between the pairs. Interallelic distances are estimated from the branch lengths of the corresponding ML tree (computed by `cophenetic` function of R base package `stats`). Taking into account all posiible arangements of allels, following distances are compared: 
-
-
-
+The first step is to find two pairs of alleles (sequences), in which the alleles are closest to each other within the pairs while more distant between the pairs. Interallelic distances are estimated from the branch lengths of the corresponding ML tree (computed by `cophenetic` function of R base package `stats`). Distances between alleles are computed as an average length of parh connecting all possible allele pairs or trios. As next, we compare calculated distances. If an average distance between alleles within any two pairs is more than `between_homeolog_distance` (desired treshold)-time shorter than the average distance between alleles within any other possible arrangements, these pairs of alleles are considered to be unequivocally different and attributable to different homeologs.
 
 
 | distance | formula | tree A | tree B | tree C | tree D | tree E |
@@ -26,6 +23,7 @@ The first step is to find two pairs of alleles (sequences), in which the alleles
 
 ![trees](/trees.png)
 
+### Tree A
 
 
 
