@@ -8,7 +8,32 @@ The R scripts for automated sorting of alleles to distinct homeologs as done in 
 
 The first step is to find two pairs of alleles (sequences), in which the alleles are closest to each other within the pairs while more distant between the pairs. Interallelic distances are estimated from the branch lengths of the corresponding ML tree (computed by `cophenetic` function of R base package `stats`).
 
+Taking into account all posiible arangements of allels, following distances are compared: 
 
+
+| distance | formula | tree A | tree B | tree C |
+| ------------- | ------------- | ------------- | ------------- | ------------- |
+|  dist12_34  | **average** [ (a1_a2) + (a3_a4) ]  | 2  | ell  | Cell  |
+|  dist13_24  | **average** [ (a1_a3) + (a2_a4) ]  | Cell  | ell  | Cell  |
+|  dist14_23  | **average** [ (a1_a4) + (a2_a3) ]  | Cell  | ell  | Cell  |
+
+|  dist123  | **average** [ (a1_a2) + (a1_a3) + (a2_a3) ]  | Cell  | ell  | Cell  |
+|  dist124  | **average** [ (a1_a2) + (a1_a4) + (a2_a4) ]  | Cell  | ell  | Cell  |
+|  dist134  | **average** [ (a1_a3) + (a1_a4) + (a3_a4) ]  | Cell  | ell  | Cell  |
+|  dist234  | **average** [ (a2_a3) + (a2_a4) + (a3_a4) ]  | Cell  | ell  | Cell  |
+
+
+
+dist12_34 = [ (distance from a1 to a2) + (distance from a3 to a4) ] / 2
+    dist13_24 = (dist[sh1,sh3] + dist[sh2,sh4])/2
+    dist14_23 = (dist[sh1,sh4] + dist[sh2,sh3])/2
+    dist123 = (dist[sh1,sh2] + dist[sh1,sh3] + dist[sh2,sh3])/3 
+    dist124 = (dist[sh1,sh2] + dist[sh1,sh4] + dist[sh2,sh4])/3 
+    dist134 = (dist[sh1,sh3] + dist[sh1,sh4] + dist[sh4,sh3])/3 
+    dist234 = (dist[sh3,sh2] + dist[sh4,sh3] + dist[sh2,sh4])/3 
+
+
+Following arangements of alleles can be found: 
 
 
 
