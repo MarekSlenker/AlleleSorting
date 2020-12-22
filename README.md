@@ -6,7 +6,8 @@ The R scripts for automated sorting of alleles to distinct homeologs as done in 
 
 ## Identifying homeologs inherited from different parents
 
-The first step is to find two pairs of alleles (sequences), in which the alleles are closest to each other within the pairs while more distant between the pairs. Interallelic distances are estimated from the branch lengths of the corresponding ML tree (computed by `cophenetic` function of R base package `stats`). Distances between alleles are computed as an average length of parh connecting all possible allele pairs or trios. As next, we compare calculated distances. If an average distance between alleles within any two pairs is more than `between_homeolog_distance` (desired treshold)-time shorter than the average distance between alleles within any other possible arrangements, these pairs of alleles are considered to be unequivocally different and attributable to different homeologs.  
+#### Find two pairs of alleles (sequences), in which the alleles are closest to each other within the pairs while more distant between the pairs
+Interallelic distances are estimated from the branch lengths of the corresponding ML tree (computed by `cophenetic` function of R base package `stats`). Distances between alleles are computed as an average length of parh connecting all possible allele pairs or trios. As next, we compare calculated distances. If an average distance between alleles within any two pairs is more than `between_homeolog_distance` (desired treshold)-time shorter than the average distance between alleles within any other possible arrangements, these pairs of alleles are considered to be unequivocally different and attributable to different homeologs.  
 
 &nbsp;  
 
@@ -31,7 +32,27 @@ lets set `between_homeolog_distance = 4`
 
 
 
-&nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  
+&nbsp;  &nbsp; 
+
+#### Whwn sorting is succesful (uneqivocal)
+
+&nbsp;  &nbsp;  
+
+
+#### Whwn sorting is NOT succesful
+
+
+&nbsp;  &nbsp;  &nbsp;  &nbsp;  
+
+
+### Najdi rodicov
+
+pouzijeme **prvy skript**, dostane sekvencie roztriedene na A1 A2 B1 B2 a LOG file, ktory popisuje co sa s kazdou vzorkou stalo.
+ak sme zvolili REMOVE,  vysledne sekvencie obsahuju len tie, ktore presli cez TRESHOLD  --> exon based analysis
+ak sme zvolili MASK, sekvencie su makovane N. vysledne fasta subory obsahuju vsetky sekvencie, tie ktore nepresli treshold su maskovane - identicke. oznacenie je vsak zmenene ako A1-B2, co umoznije konkatenaciu napr cez AMAS
+
+
+&nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  
 
 
 
