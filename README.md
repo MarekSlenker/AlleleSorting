@@ -6,21 +6,39 @@ The R scripts for automated sorting of alleles to distinct homeologs as done in 
 
 ## Identifying homeologs inherited from different parents
 
-The first step is to find two pairs of alleles (sequences), in which the alleles are closest to each other within the pairs while more distant between the pairs. Interallelic distances are estimated from the branch lengths of the corresponding ML tree (computed by `cophenetic` function of R base package `stats`).
+The first step is to find two pairs of alleles (sequences), in which the alleles are closest to each other within the pairs while more distant between the pairs. Interallelic distances are estimated from the branch lengths of the corresponding ML tree (computed by `cophenetic` function of R base package `stats`). Taking into account all posiible arangements of allels, following distances are compared: 
 
-Taking into account all posiible arangements of allels, following distances are compared: 
+
+
+
+
+| distance | formula | tree A | tree B | tree C | tree D |
+| ------------- | ------------- | ------------- | ------------- | ------------- | ------------- |
+|  dist12_34  | **average** [ (a1_a2) + (a3_a4) ]  | 2  | 11  |  20  | 20  |
+|  dist13_24  | **average** [ (a1_a3) + (a2_a4) ]  | 22  | 22  | 22  |  22  |
+|  dist14_23  | **average** [ (a1_a4) + (a2_a3) ]  | 22  | 22  | 22  |  22  |
+
+|  dist123  | **average** [ (a1_a2) + (a1_a3) + (a2_a3) ]  | 2+22+22=15.33  | 20+22+22=21.33  | 20+22+22=21.33  | 20+22+22=21.33  |
+|  dist124  | **average** [ (a1_a2) + (a1_a4) + (a2_a4) ]  | 15.33  | 21.33  | 21.33  | 21.33  |
+|  dist134  | **average** [ (a1_a3) + (a1_a4) + (a3_a4) ]  | 15.33  | 21.33  | 21.33  | 21.33  |
+|  dist234  | **average** [ (a2_a3) + (a2_a4) + (a3_a4) ]  | 15.33  | 15.33  | 21.33  | 21.33  |
+
+
+
+
+
 
 
 | distance | formula | tree A | tree B | tree C |
 | ------------- | ------------- | ------------- | ------------- | ------------- |
-|  dist12_34  | **average** [ (a1_a2) + (a3_a4) ]  | 2  | ell  | Cell  |
-|  dist13_24  | **average** [ (a1_a3) + (a2_a4) ]  | Cell  | ell  | Cell  |
-|  dist14_23  | **average** [ (a1_a4) + (a2_a3) ]  | Cell  | ell  | Cell  |
+|  dist12_34  | **average** [ (a1_a2) + (a3_a4) ]  | 2  | 11  | 20  |
+|  dist13_24  | **average** [ (a1_a3) + (a2_a4) ]  | 22  | 22  | 22  |
+|  dist14_23  | **average** [ (a1_a4) + (a2_a3) ]  | 22  | 22  | 22  |
 
-|  dist123  | **average** [ (a1_a2) + (a1_a3) + (a2_a3) ]  | Cell  | ell  | Cell  |
-|  dist124  | **average** [ (a1_a2) + (a1_a4) + (a2_a4) ]  | Cell  | ell  | Cell  |
-|  dist134  | **average** [ (a1_a3) + (a1_a4) + (a3_a4) ]  | Cell  | ell  | Cell  |
-|  dist234  | **average** [ (a2_a3) + (a2_a4) + (a3_a4) ]  | Cell  | ell  | Cell  |
+|  dist123  | **average** [ (a1_a2) + (a1_a3) + (a2_a3) ]  | 2+22+22=15.33  | 20+22+22=21.33  | 20+22+22=21.33  |
+|  dist124  | **average** [ (a1_a2) + (a1_a4) + (a2_a4) ]  | 15.33  | 21.33  | 21.33  |
+|  dist134  | **average** [ (a1_a3) + (a1_a4) + (a3_a4) ]  | 15.33  | 21.33 | 21.33  |
+|  dist234  | **average** [ (a2_a3) + (a2_a4) + (a3_a4) ]  | 15.33  | 15.33  | 21.33  |
 
 
 
