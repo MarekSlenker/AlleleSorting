@@ -29,26 +29,7 @@ The first step is to find two pairs of alleles (sequences), in which the alleles
 
 
 
-| distance | formula | tree A | tree B | tree C |
-| ------------- | ------------- | ------------- | ------------- | ------------- |
-|  dist12_34  | **average** [ (a1_a2) + (a3_a4) ]  | 2  | 11  | 20  |
-|  dist13_24  | **average** [ (a1_a3) + (a2_a4) ]  | 22  | 22  | 22  |
-|  dist14_23  | **average** [ (a1_a4) + (a2_a3) ]  | 22  | 22  | 22  |
 
-|  dist123  | **average** [ (a1_a2) + (a1_a3) + (a2_a3) ]  | 2+22+22=15.33  | 20+22+22=21.33  | 20+22+22=21.33  |
-|  dist124  | **average** [ (a1_a2) + (a1_a4) + (a2_a4) ]  | 15.33  | 21.33  | 21.33  |
-|  dist134  | **average** [ (a1_a3) + (a1_a4) + (a3_a4) ]  | 15.33  | 21.33 | 21.33  |
-|  dist234  | **average** [ (a2_a3) + (a2_a4) + (a3_a4) ]  | 15.33  | 15.33  | 21.33  |
-
-
-
-dist12_34 = [ (distance from a1 to a2) + (distance from a3 to a4) ] / 2
-    dist13_24 = (dist[sh1,sh3] + dist[sh2,sh4])/2
-    dist14_23 = (dist[sh1,sh4] + dist[sh2,sh3])/2
-    dist123 = (dist[sh1,sh2] + dist[sh1,sh3] + dist[sh2,sh3])/3 
-    dist124 = (dist[sh1,sh2] + dist[sh1,sh4] + dist[sh2,sh4])/3 
-    dist134 = (dist[sh1,sh3] + dist[sh1,sh4] + dist[sh4,sh3])/3 
-    dist234 = (dist[sh3,sh2] + dist[sh4,sh3] + dist[sh2,sh4])/3 
 
 
 Following arangements of alleles can be found: 
@@ -99,3 +80,23 @@ ak vyhadzujeme, dostavame parcialne datasety. Vsetko popisane v LOG ---> gene ba
 
 
 geny
+
+
+
+
+
+
+
+| distance | formula | tree A | tree B | tree C |
+| ------------- | ------------- | ------------- | ------------- | ------------- |
+|  dist12_34  | **average** [ (a1_a2) + (a3_a4) ]  | 2  | 11  | 20  |
+|  dist13_24  | **average** [ (a1_a3) + (a2_a4) ]  | 22  | 22  | 22  |
+|  dist14_23  | **average** [ (a1_a4) + (a2_a3) ]  | 22  | 22  | 22  |
+
+|  dist123  | **average** [ (a1_a2) + (a1_a3) + (a2_a3) ]  | 2+22+22=15.33  | 20+22+22=21.33  | 20+22+22=21.33  |
+|  dist124  | **average** [ (a1_a2) + (a1_a4) + (a2_a4) ]  | 15.33  | 21.33  | 21.33  |
+|  dist134  | **average** [ (a1_a3) + (a1_a4) + (a3_a4) ]  | 15.33  | 21.33 | 21.33  |
+|  dist234  | **average** [ (a2_a3) + (a2_a4) + (a3_a4) ]  | 15.33  | 15.33  | 21.33  |
+
+
+
