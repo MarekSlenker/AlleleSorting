@@ -6,8 +6,9 @@ The R scripts for automated sorting of alleles to distinct homeologs as done in 
 
 ## Identifying homeologs inherited from different parents
 
-The first step is to find two pairs of alleles (sequences), in which the alleles are closest to each other within the pairs while more distant between the pairs. Interallelic distances are estimated from the branch lengths of the corresponding ML tree (computed by `cophenetic` function of R base package `stats`). Distances between alleles are computed as an average length of parh connecting all possible allele pairs or trios. As next, we compare calculated distances. If an average distance between alleles within any two pairs is more than `between_homeolog_distance` (desired treshold)-time shorter than the average distance between alleles within any other possible arrangements, these pairs of alleles are considered to be unequivocally different and attributable to different homeologs.
+The first step is to find two pairs of alleles (sequences), in which the alleles are closest to each other within the pairs while more distant between the pairs. Interallelic distances are estimated from the branch lengths of the corresponding ML tree (computed by `cophenetic` function of R base package `stats`). Distances between alleles are computed as an average length of parh connecting all possible allele pairs or trios. As next, we compare calculated distances. If an average distance between alleles within any two pairs is more than `between_homeolog_distance` (desired treshold)-time shorter than the average distance between alleles within any other possible arrangements, these pairs of alleles are considered to be unequivocally different and attributable to different homeologs.  
 
+&nbsp;  
 
 | distance | formula | tree A | tree B | tree C | tree D | tree E |
 | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- |
@@ -23,7 +24,15 @@ The first step is to find two pairs of alleles (sequences), in which the alleles
 
 ![trees](/trees.png)
 
-### Tree A
+lets set `between_homeolog_distance = 4`  
+**Tree A:** &nbsp;&nbsp; The shortest distance (2) was found in arrangement as a1 and a2 as a a one pair and a3 and a4 as a another pair. The second shortest distance was found in trios (14). This distance is more than 4-time longer (between_homeolog_distance), thus we consider pairs a1-a2 and a3-a4 as unequivocally different and attributable to different homeologs (in the following steps).  
+**Trees B, C, D:** &nbsp;&nbsp; The shortest distances are not 4-time longer than any other possible distance. These alleles can not be equivocally sorted to homeologs.  
+**Tree E:** &nbsp;&nbsp; The shortest distance was found in trio, what interrupts any further attempt to find two pairs of distinct alleles.  
+
+
+
+&nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  
+
 
 
 
@@ -55,6 +64,14 @@ You can download this repository zipped (button on the right-hand side of the sc
 ```bash
 git clone https://github.com/MarekSlenker/AlleleSorting.git
 ```
+
+### How to cite
+
+**Use following formula:** Allele sequences were sorted to homeologs using the scripts and following the workflow available at https://github.com/MarekSlenker/AlleleSorting, described in detail by [Šlenker et al. (2021)](https://www.frontiersin.org/articles/).
+
+# END
+
+
 
 ##################################################################################xx
 
