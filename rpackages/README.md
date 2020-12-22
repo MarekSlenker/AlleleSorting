@@ -1,6 +1,6 @@
 # R packages
 
-Required [R](https://www.r-project.org/) packages `ape`, `seqinr`, and `filelock` and their dependencies for R version used **must** be installed here.
+Required [R](https://www.r-project.org/) packages `ape`, `seqinr`, and `filelock` for R version used **must** be installed here.
 
 Installation of source packages in Linux requires basic compilation tools and developmental files for GDAL, GEOS and UDUNITS-2.
 
