@@ -7,7 +7,7 @@ The R scripts for automated sorting of alleles to distinct homeologs as done in 
 ## Identifying homeologs inherited from different parents
 
 #### Find two pairs of alleles (sequences), in which the alleles are closest to each other within the pairs while more distant between the pairs
-Interallelic distances are estimated from the branch lengths of the corresponding ML tree (computed by `cophenetic` function of R base package `stats`). Distances between alleles are computed as an average length of path connecting all possible allele pairs or trios. As next, we compare calculated distances. If an average distance between alleles within any two pairs is more than `between_homeolog_distance` (desired treshold, see below)-time shorter than the average distance between alleles within any other possible arrangements, these pairs of alleles are considered to be unequivocally different and attributable to different homeologs. The "threating" of each sample in each tree is witen into logfile. 
+Interallelic distances are estimated from the branch lengths of the corresponding ML tree (computed by `cophenetic` function of R base package `stats`). Distances between alleles are computed as an average length of path connecting all possible allele pairs or trios. As next, we compare calculated distances. If an average distance between alleles within any two pairs is more than `between_homeolog_distance` (desired treshold, see below)-time shorter than the average distance between alleles within any other possible arrangements, these pairs of alleles are considered to be unequivocally different and attributable to different homeologs. The treatment of each sample is witen into logfile. 
 
 &nbsp;  
 
@@ -42,17 +42,23 @@ Arguments `use_between_parents_distance` (logical) and `between_parents_distance
 &nbsp;  &nbsp;  
 
 #### Sorting is NOT succesful  - mask/remove
-If the sorting is not succesful, sample alleles can be masked by using Ns on those positions or removed. Removing unsorted alleles is required for coalescent-based species tree estimation. 
+If the sorting is not succesful, sample alleles can be masked by using Ns on the positions of intra allelic SNPs, or removed. Removing unsorted alleles is required for coalescent-based species tree estimation. Hovever, if we are able to concat sequences to longer blocks (to genes, for example), partially masked sequences can be concatenated with sorted sequences to prolong allignment length. In this case, partially masked sequences will not disrupt phylogenetic analysis. On the contrary, these sequences can bring better support on the speces level.  After concatenation, the allele sorting into two homeologs has to be verified again.  
+
+&nbsp;  &nbsp;  
+
+As a result, you will get allignment(s) where suffixes of sequences of sorted samples are renamed to A1, A2, B1 and B2, indicating their belonging to parental genomes. Unsorted samples will be removed, using `if_bellow_treshold = "remove"` parameter. If you chose to mask instead fo removing, unsorted samples will be renamed too, to allow following concatenation. The treatment of each sample is witen into logfile. 
+
+
+
+
+
+
+&nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  
+
+
+
 
 The "masking" approach homogenize intra allelic variation, hovever, if we are able to concat sequences to longer blocks (to genes, for example), even masked sequences can 
-
-
-
-
-The "masking" approach homogenize intra allelic variation, hovever, if we are able to concat sequences to longer blocks (to genes, for example), even masked sequences can 
-
-&nbsp;  &nbsp;  &nbsp;  &nbsp;  
-
 
 ### Najdi rodicov
 
