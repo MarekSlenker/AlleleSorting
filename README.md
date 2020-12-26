@@ -7,7 +7,7 @@ The R scripts for automated sorting of alleles to distinct homeologs as done in 
 ## Identifying homeologs inherited from different parents
 
 #### Find two pairs of alleles (sequences), in which the alleles are closest to each other within the pairs while more distant between the pairs
-Interallelic distances are estimated from the branch lengths of the corresponding ML tree (computed by `cophenetic` function of R base package `stats`). Distances between alleles are computed as an average length of parh connecting all possible allele pairs or trios. As next, we compare calculated distances. If an average distance between alleles within any two pairs is more than `between_homeolog_distance` (desired treshold)-time shorter than the average distance between alleles within any other possible arrangements, these pairs of alleles are considered to be unequivocally different and attributable to different homeologs.  
+Interallelic distances are estimated from the branch lengths of the corresponding ML tree (computed by `cophenetic` function of R base package `stats`). Distances between alleles are computed as an average length of path connecting all possible allele pairs or trios. As next, we compare calculated distances. If an average distance between alleles within any two pairs is more than `between_homeolog_distance` (desired treshold, see below)-time shorter than the average distance between alleles within any other possible arrangements, these pairs of alleles are considered to be unequivocally different and attributable to different homeologs. The "threating" of each sample in each tree is witen into logfile. 
 
 &nbsp;  
 
@@ -34,13 +34,22 @@ lets set `between_homeolog_distance = 4`
 
 &nbsp;  &nbsp; 
 
-#### Whwn sorting is succesful (uneqivocal)
+#### Sorting is succesful (uneqivocal) -> attribute to one parent
+If the sorting is succesful, we have two pairs. We dont kow where they belong, only think we know is, that they are sufficiently similar within pairs and different between pairs.  
+The next step is to calculate distance of each pair to a potential parent (`Parent_A`). The parir closer to `Parent_A` is labelled as homeolog A, and its alleles as A1 and A2 (in a random order). Pair more distant is labeled as homeolog B and its alleles as B1 and B2. The "`*** conditions are met`" is writen to log file.  
+Arguments `use_between_parents_distance` (logical) and `between_parents_distance` (numeric) can be used for more precise filtering. If `use_between_parents_distance=TRUE`, homeolog A has to be more than `between_parents_distance` closer to `Parent_A` than to homeolog B, to consider them as uneqivocally sorted.  
 
 &nbsp;  &nbsp;  
 
+#### Sorting is NOT succesful  - mask/remove
+If the sorting is not succesful, sample alleles can be masked by using Ns on those positions or removed. Removing unsorted alleles is required for coalescent-based species tree estimation. 
 
-#### Whwn sorting is NOT succesful
+The "masking" approach homogenize intra allelic variation, hovever, if we are able to concat sequences to longer blocks (to genes, for example), even masked sequences can 
 
+
+
+
+The "masking" approach homogenize intra allelic variation, hovever, if we are able to concat sequences to longer blocks (to genes, for example), even masked sequences can 
 
 &nbsp;  &nbsp;  &nbsp;  &nbsp;  
 
