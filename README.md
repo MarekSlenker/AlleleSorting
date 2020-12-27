@@ -46,7 +46,7 @@ If the sorting is not succesful, sample alleles can be masked by using Ns on the
 
 &nbsp;  &nbsp;  
 
-As a result, you will get allignment(s) where suffixes of sequences of sorted samples are renamed to A1, A2, B1 and B2, indicating their belonging to parental genomes. Unsorted samples will be removed, using `if_bellow_treshold = "remove"` parameter. If you chose to mask instead fo removing, unsorted samples will be renamed too, to allow following concatenation. The treatment of each sample is witen into logfile. 
+As a result, you will get allignment(s) where suffixes of sequences of sorted samples are renamed to A1, A2, B1 and B2, indicating their belonging to parental genomes. Unsorted samples will be removed if `if_bellow_treshold = "remove"` is used. If you chose to mask instead fo removing, unsorted samples will be renamed too, to allow following concatention. The treatment of each sample is witen into logfile. 
 
 
 
