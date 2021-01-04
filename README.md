@@ -46,10 +46,10 @@ If the sorting is not succesful, sample alleles can be masked by using Ns on the
 
 &nbsp;  &nbsp;  
 
-As a result, you will get allignment(s) where suffixes of sequences of sorted samples are renamed to A1, A2, B1 and B2, indicating their belonging to parental genomes. Unsorted samples will be removed if `if_bellow_treshold = "remove"` is used. If you chose to mask instead fo removing, unsorted samples will be renamed too, to allow following concatention. The treatment of each sample is witen into logfile. 
+As a **result**, you will get allignment(s) where suffixes of sequences of sorted samples are renamed to A1, A2, B1 and B2, indicating their belonging to parental genomes. Unsorted samples will be removed if `if_bellow_treshold = "remove"` is used. If you chose to mask instead fo removing, unsorted samples will be renamed too, to allow following concatention. The treatment of each sample is witen into logfile.
 
-
-
+The "masking" approach homogenize intra allelic variation, hovever, if we are able to concat sequences to longer blocks (to genes, for example), even masked sequences can provide additional support for sample/ species level differenciation.
+After concatenation, the allele sorting into two homeologs was verified for each gene, to confirm unambiguity, or to remove the equivocal sample from the gene alignments.
 
 
 
@@ -58,7 +58,56 @@ As a result, you will get allignment(s) where suffixes of sequences of sorted sa
 
 
 
-The "masking" approach homogenize intra allelic variation, hovever, if we are able to concat sequences to longer blocks (to genes, for example), even masked sequences can 
+## Running the pipeline
+
+
+#### Input files:
+* Alligned sequences in fasta format
+* Phylogenetic trees in newick format  
+* A parent mapping file containing a list parental species and individuals (samples)  
+This mapping file should have one line per species, and each line needs to be in following format:  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; species1:<sample1_name>,<sample2_name>  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `amara:ambC014_101,ambC024_103,ammC029_102`  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `matthioli:matGRM9`  
+        
+* A sample file, containing a list of samples, which alleles have to be sorted to homeologs  
+Each sample in a separate line.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <sample3_name>  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <sample4_name>  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `barC007_103`  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `barC010_102`  
+  
+* A list of sequences to process.
+!!!!!! toto nerob, len listni sekvencie v seqDir
+
+
+
+#### Pipeline Output:
+
+
+All needed functions are stored in `functions.R` file. 
+
+
+
+Scripts depend on the following list of variables. You can set them in the `Main.sh` script. Please ensure they are set up correctly.  
+* `DATADIR` = path to a directory containing forward and reverse FASTQ files (assuming paired-end reads ) for each individual. For expected naming convention see above.  
+* `REFSEQ` = reference fasta sequences. For expected naming convention see above.  
+* `SAMPLEPLOIDYFILE`= path to a file containing sample names and their ploidy in expected structure (see above).  
+* `GCPFILE`= path to a file containing patterns for concatenation (see above). Not required.  
+* `SCRIPTDIR`= path to this directory, containing running scripts.  
+
+
+
+
+
+
+
+
+&nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  
+&nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  
+&nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  
+
+
 
 ### Najdi rodicov
 
