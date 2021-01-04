@@ -62,27 +62,48 @@ After concatenation, the allele sorting into two homeologs was verified for each
 
 
 #### Input files:
-* Alligned sequences in fasta format
-* Phylogenetic trees in newick format  
-* A parent mapping file containing a list parental species and individuals (samples)  
+1) Alligned sequences in fasta format
+Allele sequences of **tetraploid** sampes, which should be sorted to two homeologs have to be named as follow:  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <sample_name>-a1  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <sample_name>-a2  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <sample_name>-a3  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <sample_name>-a4  
+&nbsp;  
+where <sample_name> have to be listed in a parent mapping file (see bullet 3).    
+&nbsp;  
+other sequences, or at leas sequences of sampes belonging to **diploid** Parent A have to be named as:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <parentSample1_name>-a1  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <parentSample1_name>-a2  
+
+
+2) Phylogenetic trees in newick format  
+Bulided from alligned sequences.  
+
+3) A species mapping file containing a list **diploid** species and individuals (samples)  
 This mapping file should have one line per species, and each line needs to be in following format:  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; species1:<sample1_name>,<sample2_name>  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `amara:ambC014_101,ambC024_103,ammC029_102`  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `matthioli:matGRM9`  
-        
-* A sample file, containing a list of samples, which alleles have to be sorted to homeologs  
+
+Not all samples need to be listed here. To sort allels of tetraploids, only samples of Parent A are required. Hovever, if you want to use other tools, e.g. to calculate distances of identified homeologs of tetraploid to all other diploid species, have to be listed. 
+
+
+* A sample file, containing a list of **tetraploid** samples, which alleles have to be sorted to homeologs  
 Each sample in a separate line.
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <sample3_name>  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <sample4_name>  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `barC007_103`  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `barC010_102`  
   
-* A list of sequences to process.
-!!!!!! toto nerob, len listni sekvencie v seqDir
+* A exon / gene list to process
+Aligned sequence and phylogenetic tree built from particular sequence have to have the same basis of the file name. This is the list of those names. Script will iterate through this list and take sequence and corresponding phylogenetic tree.   
+
+
 
 
 
 #### Pipeline Output:
+* Alligned sequences in fasta format
 
 
 All needed functions are stored in `functions.R` file. 
