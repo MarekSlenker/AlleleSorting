@@ -117,19 +117,23 @@ Scripts depend on the following list of variables. You have to set them in the b
 * `seqDir`: path to a directory containing alligned sequences.  
 * `2xSamplesFile`: path to a species mapping file containing a list **diploid** species and samples (see above).  
 * `4xSamplesFile`: path to a file containing a list of **tetraploid** samples, which alleles have to be sorted to homeologs (see above).  
-* `Parent_A`: A one of potential parent. Species name has to be included in `2xSamplesFile`. Can be represented by multiple samples.
-
-
-path to this directory, containing running scripts.  
+* `Parent_A`: A one of potential parent. Species name has to be included in `2xSamplesFile`. Can be represented by multiple samples.  
 * `patterns_exonsFile`, `patterns_genesFile`: A exon / gene list to process.  
 * `logfile`: log file, containing a treatment of each sample for each sequence.  
 * `between_homeolog_distance`: two allele pairs are considered to be different homeologs inherited from different parents, if distance between this arrangement of alleles is `between_homeolog_distance`-shorter than distance of any other possible arrangement.  
 * `use_between_parents_distance` and `between_parents_distance`: can be used for more precise filtering. If `use_between_parents_distance=TRUE`, homeolog A has to be more than `between_parents_distance` closer to Parent_A than to homeolog B, to consider them as uneqivocally sorted.  
 * `if_bellow_treshold`: two options - "remove" or "mask", see above.  
-* `AB_HomeologsDir`: a results dir for rosted sequences and log file.  
+* `AB_HomeologsDir`: a results dir for sorted sequences and log file.  
 
 
+Alleles are sorted to A and B homeologs using a `sortAllels_by_1parent` function. 
 
+Prefered approach is to use multiple threads, to speed up computation (using a `mclapply` function). A critical section in code is protected by exclusive locking. Alretnatively, use a for loop to do all in a single thread.  
+
+#### sortAllels_by_1parent - A a B   -kontrolovanie
+
+
+#### Distance table
 
 
 
