@@ -126,11 +126,14 @@ Scripts depend on the following list of variables. You have to set them in the b
 * `AB_HomeologsDir`: a results dir for sorted sequences and log file.  
 
 
-Alleles are sorted to A and B homeologs using a `sortAllels_by_1parent` function. 
+Alleles are sorted to A and B homeologs using a `sortAllels` function. 
 
 Prefered approach is to use multiple threads, to speed up computation (using a `mclapply` function). A critical section in code is protected by exclusive locking. Alretnatively, use a for loop to do all in a single thread.  
 
 #### sortAllels_by_1parent - A a B   -kontrolovanie
+
+If sorted sequences are concatenated, their sorting ahve to be reevaluated again. 
+
 
 
 #### Distance table
