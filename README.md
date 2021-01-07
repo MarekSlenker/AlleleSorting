@@ -73,7 +73,7 @@ The sorting into homeologs has to be verified after concatenation, to confirm un
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `barC007_103-a4`  
 where <4xSample> have to be listed in a sample file (see bullet 3).    
 &nbsp;  
-other sequences, or at leas sequences of samples belonging to **diploid** Parent A has to be named as:  
+other sequences, or at least sequences of samples belonging to **diploid** Parent A has to be named as:  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <2xSample>-a1  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <2xSample>-a2  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `ambC014_101-a1`  
@@ -125,9 +125,9 @@ Scripts depend on the following list of variables. You have to set them in the `
 * `logfile`: the log file, containing a treatment of each sample for each sequence.  
 
 
-Alleles are sorted to A and B homeologs using a `sortAllels` function. If sorted sequences are concatenated, phylogenetic trees have to be computed and sorting has to be reevaluated again, using `confirmSorting` function. Distances of each homeolog pair to diploid samples can be calculated using `distanceTable` function.  
+Alleles are sorted to A and B homeologs using a `sortAllels()` function. If sorted sequences are concatenated, phylogenetic trees have to be computed and sorting has to be reevaluated again, using `confirmSorting()` function. Distances of each homeolog pair to diploid samples can be calculated using `distanceTable()` function.  
 
-The functions are implemented in a thread-safe way. A critical sections in code are protected by exclusive locking. Thus, multithreading (using a `mclapply` function) is a preferred approach as it significantly speeds up computation time. Alternatively, use a `for` loop to do all in a single thread.
+The functions are implemented in a thread-safe way. A critical sections in code are protected by exclusive locking. Thus, multithreading (using a `mclapply()` function) is a preferred approach as it significantly speeds up computation time. Alternatively, use a `for()` loop to do all in a single thread.
 &nbsp;  
 
 
