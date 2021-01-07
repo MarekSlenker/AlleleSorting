@@ -62,7 +62,8 @@ After concatenation, the allele sorting into two homeologs was verified for each
 
 
 #### Input files:
-1) Allele sequences of **tetraploid** sampes (in fasta format), which should be sorted to two homeologs have to be named as follow:  
+1) Aigned sequences in fasta format  
+**tetraploid** sampes, which should be sorted to two homeologs have to be named as follow:  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <4xSample>-a1  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <4xSample>-a2  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <4xSample>-a3  
@@ -71,8 +72,7 @@ After concatenation, the allele sorting into two homeologs was verified for each
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `barC007_103-a2`  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `barC007_103-a3`  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `barC007_103-a4`  
-&nbsp;  
-where <sample_name> have to be listed in a sample file (see bullet 3).    
+where <4xSample> have to be listed in a sample file (see bullet 3).    
 &nbsp;  
 other sequences, or at leas sequences of sampes belonging to **diploid** Parent A have to be named as:  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <2xSample>-a1  
@@ -85,7 +85,7 @@ other sequences, or at leas sequences of sampes belonging to **diploid** Parent 
 
 3) A sample file, containing a list of **tetraploid** samples, which alleles have to be sorted to homeologs. Each sample in a separate line.  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <4xSample1>  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <4xSample2>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <4xSample2>  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `barC007_103`  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `barC010_102`  
 
@@ -106,15 +106,14 @@ This mapping file should have one line per species, and each line needs to be in
 
 #### Running the pipeline
 
-All needed functions are stored in `functions.R` file. These functions have to be added as source into environment. 
+Use the `Main.R` script as a reference and edit it according your needs. Set arguments and load functions from `functions.R` into environment. 
 ```R
 source('./functions.R')
 ```
 
-
 Scripts depend on the following list of variables. You have to set them in the begining of the `Main.R` script. Please ensure they are set up correctly.  
-* `2xSamplesFile`: path to a species mapping file containing a list **diploid** species and samples (see above).  
-* `4xSamplesFile`: path to a file containing a list of **tetraploid** samples, which alleles have to be sorted to homeologs (see above).  
+* `samples_2x_File`: path to a species mapping file containing a list **diploid** species and samples (see above).  
+* `samples_4x_File`: path to a file containing a list of **tetraploid** samples, which alleles have to be sorted to homeologs (see above).  
 * `Parent_A`: A one of potential parent. Species name has to be included in `2xSamplesFile`. Can be represented by multiple samples.  
 * `between_homeolog_distance`: two allele pairs are considered to be different homeologs inherited from different parents, if distance between this arrangement of alleles is `between_homeolog_distance`-shorter than distance of any other possible arrangement.  
 * `use_between_parents_distance` and `between_parents_distance`: can be used for more precise filtering. If `use_between_parents_distance=TRUE`, homeolog A has to be more than `between_parents_distance` closer to Parent_A than to homeolog B, to consider them as uneqivocally sorted.  
@@ -129,13 +128,11 @@ Scripts depend on the following list of variables. You have to set them in the b
 
 Alleles are sorted to A and B homeologs using a `sortAllels` function. Prefered approach is to use multiple threads, to speed up computation (using a `mclapply` function). A critical section in code is protected by exclusive locking. Alretnatively, use a for loop to do all in a single thread.  
 &nbsp;  
-&nbsp;  
-
 If sorted sequences are concatenated, phylogenetic trees have to be computed and sorting have to be reevaluated again, using `confirmSorting` function.  
 
+Distances of each homeolog pair to diploid samples can be calculated using `distanceTable` function.  
 
 
-#### Distance table
 
 
 
@@ -143,30 +140,6 @@ If sorted sequences are concatenated, phylogenetic trees have to be computed and
 &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  
 &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  
 
-
-
-### Najdi rodicov
-
-pouzijeme **prvy skript**, dostane sekvencie roztriedene na A1 A2 B1 B2 a LOG file, ktory popisuje co sa s kazdou vzorkou stalo.
-ak sme zvolili REMOVE,  vysledne sekvencie obsahuju len tie, ktore presli cez TRESHOLD  --> exon based analysis
-ak sme zvolili MASK, sekvencie su makovane N. vysledne fasta subory obsahuju vsetky sekvencie, tie ktore nepresli treshold su maskovane - identicke. oznacenie je vsak zmenene ako A1-B2, co umoznije konkatenaciu napr cez AMAS
-
-
-&nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  
-
-
-
-
-
-
-
-Following arangements of alleles can be found: 
-
-
-
-
-
-The optimal threshold for unequivocal allele sorting was set to 4. This means that if an average distance between alleles within the proposed two pairs was more than four-time shorter than the average distance between alleles within any other possible arrangements, these pairs of alleles were considered to be unequivocally different and attributable to different homeologs. If the allele sorting did not pass the desired threshold, interallelic SNPs were masked by using Ns on those positions (for further concatenation to gene alignments, see below) or the sample was removed from the alignment (for exon-based analyses). As next, the allele pairs were attributed to different homeologs and labelled by calculating their distances to the alleles of all diploid species. The allele pair that was closer to C. amara (proposed as the maternal parent according to the plastid phylogeny, see below) was marked as homoelog ‘A’ and the other as homeolog ‘B’. Gene alignments were also assembled, in which the respective exons were concatenated to genes to obtain longer alignments with potentially higher phylogenetic signal. The concatenated exons included those with successfully sorted alleles into ‘A’ and ‘B’ homeologs, and those for which allele sorting was equivocal, with masked interallelic SNPs. After exon concatenation, the allele sorting into two homeologs was verified for each gene, with the same threshold as set for the exons above, to confirm unambiguity, or to remove the equivocal sample from the gene alignments. Both exon-based and gene-based alignments were used for species tree inference in ASTRAL-III. The labelled homeologs, representing the two subgenomes within C. barbaraeoides, were treated as independent accessions. Used scripts are available at http://github.com/MarekSlenker/AlleleSorting...(?). 
 
 
 ### Software Dependencies
