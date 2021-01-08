@@ -23,7 +23,7 @@ Interallelic distances are computed from the branch lengths of the corresponding
 
 
 
-![trees](/trees.png)
+![trees](/trees3.png)
 
 lets set `between_homeolog_distance = 4`  
 **Tree A:** &nbsp;&nbsp; The shortest distance (2) was found in the arrangement as a1 and a2 as a one pair and a3 and a4 as another pair. The second shortest distance was found in trios (14). This distance is more than 4-time longer (between_homeolog_distance), thus we consider pairs a1-a2 and a3-a4 as unequivocally different and attributable to different homeologs (in the following steps).  
