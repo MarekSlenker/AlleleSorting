@@ -1,7 +1,7 @@
 
 
 
-sortAllels <- function(pattern, treeDir, seqDir, resdir, samples2x, samples4x, Parent_A, if_bellow_treshold, between_homeolog_distance, logfile) {
+sortAllels <- function(pattern, treeDir, seqDir, resdir, samples2x, samples4x, Parent_A, if_below_treshold, between_homeolog_distance, logfile) {
   tocat = character();  tocat = c("\n", pattern, "\t")
   
   tree = read.tree(file = list.files(treeDir, pattern = pattern, full.names = TRUE))
@@ -28,7 +28,7 @@ sortAllels <- function(pattern, treeDir, seqDir, resdir, samples2x, samples4x, P
         if (use_between_parents_distance & (dt_2$ratio < between_parents_distance)){
           tocat = c(tocat, "masked/removed", "\t")
           
-          seq = do_if_bellow_treshold(if_bellow_treshold, sample, seq)
+          seq = do_if_below_treshold(if_below_treshold, sample, seq)
           # it doesn't matter how, but sequences have to be renamed
           rownames(seq)[grep(homeolog_A.1, rownames(seq))] = paste(sample, "-A1", sep = ""); rownames(seq)[grep(homeolog_A.2, rownames(seq))] = paste(sample, "-A2", sep = ""); rownames(seq)[grep(homeolog_B.1, rownames(seq))] = paste(sample, "-B1", sep = ""); rownames(seq)[grep(homeolog_B.2, rownames(seq))] = paste(sample, "-B2", sep = "")
           
@@ -46,7 +46,7 @@ sortAllels <- function(pattern, treeDir, seqDir, resdir, samples2x, samples4x, P
         if (use_between_parents_distance & (dt_2$ratio < between_parents_distance)){
           tocat = c(tocat, "masked/removed", "\t")
           
-          seq = do_if_bellow_treshold(if_bellow_treshold, sample, seq)
+          seq = do_if_below_treshold(if_below_treshold, sample, seq)
           
           # it doesn't matter how, but sequences have to be renamed
           rownames(seq)[grep(homeolog_A.1, rownames(seq))] = paste(sample, "-A1", sep = ""); rownames(seq)[grep(homeolog_A.2, rownames(seq))] = paste(sample, "-A2", sep = ""); rownames(seq)[grep(homeolog_B.1, rownames(seq))] = paste(sample, "-B1", sep = ""); rownames(seq)[grep(homeolog_B.2, rownames(seq))] = paste(sample, "-B2", sep = "")
@@ -63,7 +63,7 @@ sortAllels <- function(pattern, treeDir, seqDir, resdir, samples2x, samples4x, P
       
       } else {
         tocat = c(tocat, "masked/removed", "\t")
-        seq = do_if_bellow_treshold(if_bellow_treshold, sample, seq)
+        seq = do_if_below_treshold(if_below_treshold, sample, seq)
         
         rownames(seq)[grep(homeolog_A.1, rownames(seq))] = paste(sample, "-A1", sep = ""); rownames(seq)[grep(homeolog_A.2, rownames(seq))] = paste(sample, "-A2", sep = ""); rownames(seq)[grep(homeolog_B.1, rownames(seq))] = paste(sample, "-B1", sep = ""); rownames(seq)[grep(homeolog_B.2, rownames(seq))] = paste(sample, "-B2", sep = "")
       }
@@ -72,14 +72,14 @@ sortAllels <- function(pattern, treeDir, seqDir, resdir, samples2x, samples4x, P
       
       tocat = c(tocat, "masked/removed", "\t")
       
-      seq = do_if_bellow_treshold(if_bellow_treshold, sample, seq)
+      seq = do_if_below_treshold(if_below_treshold, sample, seq)
       rownames(seq)[grep(paste(sample, "-a1", sep = ""), rownames(seq))] = paste(sample, "-A1", sep = ""); rownames(seq)[grep(paste(sample, "-a2", sep = ""), rownames(seq))] = paste(sample, "-A2", sep = ""); rownames(seq)[grep(paste(sample, "-a3", sep = ""), rownames(seq))] = paste(sample, "-B1", sep = ""); rownames(seq)[grep(paste(sample, "-a4", sep = ""), rownames(seq))] = paste(sample, "-B2", sep = "")
     }
       
     
     
     ###########x
-#    returnedList = evaluateDistance_sortSequence(distanceTable1, sample, between_homeolog_distance, tree, Parent_A_list, use_between_parents_distance, between_parents_distance, tocat, if_bellow_treshold, seq, homeolog_A.1, homeolog_A.2, homeolog_B.1,  homeolog_B.2)
+#    returnedList = evaluateDistance_sortSequence(distanceTable1, sample, between_homeolog_distance, tree, Parent_A_list, use_between_parents_distance, between_parents_distance, tocat, if_below_treshold, seq, homeolog_A.1, homeolog_A.2, homeolog_B.1,  homeolog_B.2)
 #    seq = returnedList[[1]]
 #    tocat = returnedList[[2]]
   }
@@ -91,7 +91,7 @@ sortAllels <- function(pattern, treeDir, seqDir, resdir, samples2x, samples4x, P
   unlock(lck)
 }
 
-confirmSorting <- function(pattern, treeDir, seqDir, resdir, samples2x, samples4x, Parent_A, if_bellow_treshold, between_homeolog_distance, logfile) {
+confirmSorting <- function(pattern, treeDir, seqDir, resdir, samples2x, samples4x, Parent_A, if_below_treshold, between_homeolog_distance, logfile) {
   tocat = character();  tocat = c("\n", pattern, "\t")
   
   tree = read.tree(file = list.files(treeDir, pattern = pattern, full.names = TRUE))
@@ -118,12 +118,12 @@ confirmSorting <- function(pattern, treeDir, seqDir, resdir, samples2x, samples4
     } else {
       tocat = c(tocat, "masked/removed", "\t")
       
-      seq = do_if_bellow_treshold(if_bellow_treshold, sample, seq)
+      seq = do_if_below_treshold(if_below_treshold, sample, seq)
     }
     
     
     # I need to do it like this, as I need to return 2 objects
-    # returnedList = evaluateDistance_sortSequence(distanceTable1, sample, between_homeolog_distance, tree, Parent_A_list, use_between_parents_distance, between_parents_distance, tocat, if_bellow_treshold, seq, homeolog_A.1, homeolog_A.2, homeolog_B.1,  homeolog_B.2)
+    # returnedList = evaluateDistance_sortSequence(distanceTable1, sample, between_homeolog_distance, tree, Parent_A_list, use_between_parents_distance, between_parents_distance, tocat, if_below_treshold, seq, homeolog_A.1, homeolog_A.2, homeolog_B.1,  homeolog_B.2)
     # seq = returnedList[[1]]
     # tocat = returnedList[[2]]
   }
@@ -205,8 +205,8 @@ calculate_AB_Distances <- function(tree, samples4x) {
   return(distTable_1)
 }
 
-do_if_bellow_treshold <- function(if_bellow_treshold, sample, seq) {
-  switch (if_bellow_treshold,
+do_if_below_treshold <- function(if_below_treshold, sample, seq) {
+  switch (if_below_treshold,
           mask = {
             seq = mask_by_N(sample, seq)
             }
@@ -380,7 +380,7 @@ evaluateDistance <- function(distanceTable1, sample, between_homeolog_distance) 
   
 }
 
-evaluateDistance_sortSequence <- function(distanceTable1, sample, between_homeolog_distance, tree, Parent_A_list, use_between_parents_distance, between_parents_distance, tocat, if_bellow_treshold, seq, homeolog_A.1, homeolog_A.2, homeolog_B.1,  homeolog_B.2) {
+evaluateDistance_sortSequence <- function(distanceTable1, sample, between_homeolog_distance, tree, Parent_A_list, use_between_parents_distance, between_parents_distance, tocat, if_below_treshold, seq, homeolog_A.1, homeolog_A.2, homeolog_B.1,  homeolog_B.2) {
       toSolve = TRUE
       if (  (distanceTable1[[sample]]$dist[2] / distanceTable1[[sample]]$dist[1] ) >  between_homeolog_distance &
             distanceTable1[[sample]]$twoOrThree[1] ==  "2pairs" &
@@ -398,7 +398,7 @@ evaluateDistance_sortSequence <- function(distanceTable1, sample, between_homeol
           if (use_between_parents_distance & (dt_2$ratio < between_parents_distance)){
             tocat = c(tocat, "masked/removed", "\t")
             
-            seq = do_if_bellow_treshold(if_bellow_treshold, sample, seq)
+            seq = do_if_below_treshold(if_below_treshold, sample, seq)
             # it doesn't matter how, but sequences have to be renamed
             rownames(seq)[grep(homeolog_A.1, rownames(seq))] = paste(sample, "-A1", sep = ""); rownames(seq)[grep(homeolog_A.2, rownames(seq))] = paste(sample, "-A2", sep = ""); rownames(seq)[grep(homeolog_B.1, rownames(seq))] = paste(sample, "-B1", sep = ""); rownames(seq)[grep(homeolog_B.2, rownames(seq))] = paste(sample, "-B2", sep = "")
             
@@ -420,7 +420,7 @@ evaluateDistance_sortSequence <- function(distanceTable1, sample, between_homeol
           if (use_between_parents_distance & (dt_2$ratio < between_parents_distance)){
             tocat = c(tocat, "masked/removed", "\t")
             
-            seq = do_if_bellow_treshold(if_bellow_treshold, sample, seq)
+            seq = do_if_below_treshold(if_below_treshold, sample, seq)
             
             # it doesn't matter how, but sequences have to be renamed
             rownames(seq)[grep(homeolog_A.1, rownames(seq))] = paste(sample, "-A1", sep = ""); rownames(seq)[grep(homeolog_A.2, rownames(seq))] = paste(sample, "-A2", sep = ""); rownames(seq)[grep(homeolog_B.1, rownames(seq))] = paste(sample, "-B1", sep = ""); rownames(seq)[grep(homeolog_B.2, rownames(seq))] = paste(sample, "-B2", sep = "")
@@ -441,7 +441,7 @@ evaluateDistance_sortSequence <- function(distanceTable1, sample, between_homeol
           
           tocat = c(tocat, "masked/removed", "\t")
           
-          seq = do_if_bellow_treshold(if_bellow_treshold, sample, seq)
+          seq = do_if_below_treshold(if_below_treshold, sample, seq)
           
           # it doesn't matter how, but sequences have to be renamed
           rownames(seq)[grep(homeolog_A.1, rownames(seq))] = paste(sample, "-A1", sep = ""); rownames(seq)[grep(homeolog_A.2, rownames(seq))] = paste(sample, "-A2", sep = ""); rownames(seq)[grep(homeolog_B.1, rownames(seq))] = paste(sample, "-B1", sep = ""); rownames(seq)[grep(homeolog_B.2, rownames(seq))] = paste(sample, "-B2", sep = "")
@@ -461,7 +461,7 @@ evaluateDistance_sortSequence <- function(distanceTable1, sample, between_homeol
           
         tocat = c(tocat, "masked/removed", "\t")
         
-        seq = do_if_bellow_treshold(if_bellow_treshold, sample, seq)
+        seq = do_if_below_treshold(if_below_treshold, sample, seq)
         
         # it doesn't matter how, but sequences have to be renamed
         #homeolog_A.1 = paste(sample, "-A1", sep = ""); homeolog_A.2 = paste(sample, "-A2", sep = ""); homeolog_B.1 = paste(sample, "-B1", sep = "");  homeolog_B.2 = paste(sample, "-B2", sep = "")
