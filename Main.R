@@ -43,7 +43,7 @@ library(parallel)
 seqDir="test_dataset/inputData/seq"
 treeDir="test_dataset/inputData/trees"
 patterns_exonsFile="test_dataset/inputData/patterns_exons"
-if_bellow_treshold = "mask"  # "mask" or "remove"
+if_below_treshold = "mask"  # "mask" or "remove"
 ResDir="test_dataset/1_AB_Homeologs_exons_seq"
 logfile = "test_dataset/1_AB_Homeologs_exons_seq/1_AB_Homeologs_exons_seq.log"
 dir.create(ResDir)
@@ -53,12 +53,12 @@ patterns_exons = read.delim(patterns_exonsFile, header = FALSE,  stringsAsFactor
 cat("", samples4x$V1, sep = "\t", file = logfile)
 
 # using multiple threads
-mclapply(patterns_exons$V1, sortAllels, treeDir=treeDir, seqDir = seqDir, resdir=ResDir, samples2x=samples2x, samples4x=samples4x, Parent_A=Parent_A, if_bellow_treshold=if_bellow_treshold, between_homeolog_distance=between_homeolog_distance, logfile=logfile, mc.cores = 4)
+mclapply(patterns_exons$V1, sortAllels, treeDir=treeDir, seqDir = seqDir, resdir=ResDir, samples2x=samples2x, samples4x=samples4x, Parent_A=Parent_A, if_below_treshold=if_below_treshold, between_homeolog_distance=between_homeolog_distance, logfile=logfile, mc.cores = 4)
 
 # same in single thread
 for (pattern in patterns_exons$V1) {
   cat(pattern, "\n")
-  sortAllels(pattern, treeDir=treeDir, seqDir = seqDir, resdir=ResDir, samples2x=samples2x, samples4x=samples4x, Parent_A=Parent_A, if_bellow_treshold=if_bellow_treshold, between_homeolog_distance=between_homeolog_distance, logfile=logfile )
+  sortAllels(pattern, treeDir=treeDir, seqDir = seqDir, resdir=ResDir, samples2x=samples2x, samples4x=samples4x, Parent_A=Parent_A, if_below_treshold=if_below_treshold, between_homeolog_distance=between_homeolog_distance, logfile=logfile )
 }
 
 
@@ -77,7 +77,7 @@ for (pattern in patterns_exons$V1) {
 patterns_genesFile="test_dataset/inputData/patterns_genes"
 seqDir="test_dataset/2_AB_Homeologs_genes_seq"
 treeDir="test_dataset/3_AB_Homeologs_genes_trees"
-if_bellow_treshold = "remove"
+if_below_treshold = "remove"
 ResDir="test_dataset/4_AB_Homeologs_genes_seq_confirmed"
 logfile = "test_dataset/4_AB_Homeologs_genes_seq_confirmed/4_AB_Homeologs_genes_seq_confirmed.log"
 dir.create(ResDir)
@@ -88,12 +88,12 @@ patterns_genes = read.delim(patterns_genesFile, header = FALSE,  stringsAsFactor
 cat("", samples4x$V1, sep = "\t", file = logfile)
 
 # using multiple threads
-mclapply(patterns_genes$V1, confirmSorting, treeDir=treeDir, seqDir = seqDir, resdir=ResDir, samples2x=samples2x, samples4x=samples4x, Parent_A=Parent_A, if_bellow_treshold=if_bellow_treshold, between_homeolog_distance=between_homeolog_distance, logfile=logfile, mc.cores = 4)
+mclapply(patterns_genes$V1, confirmSorting, treeDir=treeDir, seqDir = seqDir, resdir=ResDir, samples2x=samples2x, samples4x=samples4x, Parent_A=Parent_A, if_below_treshold=if_below_treshold, between_homeolog_distance=between_homeolog_distance, logfile=logfile, mc.cores = 4)
 
 # same in single thread
 for (pattern in patterns_genes$V1) {
   cat(pattern, "\n")
-  confirmSorting(pattern, treeDir=treeDir, seqDir = seqDir, resdir=ResDir, samples2x=samples2x, samples4x=samples4x, Parent_A=Parent_A, if_bellow_treshold=if_bellow_treshold, between_homeolog_distance=between_homeolog_distance, logfile=logfile )
+  confirmSorting(pattern, treeDir=treeDir, seqDir = seqDir, resdir=ResDir, samples2x=samples2x, samples4x=samples4x, Parent_A=Parent_A, if_below_treshold=if_below_treshold, between_homeolog_distance=between_homeolog_distance, logfile=logfile )
 }
 
 
