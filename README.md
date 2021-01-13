@@ -1,13 +1,13 @@
 # AlleleSorting
 
 
-The R scripts for automated sorting of alleles to distinct homeologs as done in [Šlenker et al. 2021](https://www.frontiersin.org/articles/). Currently, we are able to sort alleles of suspected allotetraploid. However, future developments will focus on resolving genomes of higher ploidy levels as well as autopolyploids.
+The R scripts for automated sorting of alleles obtained from polyploid genomes to distinct homeologs as done in [Šlenker et al. 2021](https://www.frontiersin.org/articles/). Currently, we are able to sort alleles of suspected allotetraploids. However, future developments will focus on resolving genomes of higher ploidy levels as well as autopolyploids.
 
 
 ## Identifying homeologs inherited from different parents
 
 #### Find two pairs of alleles (sequences), in which the alleles are closest to each other within the pairs while more distant between the pairs
-Interallelic distances are computed from the branch lengths of the corresponding ML tree (computed by `cophenetic` function of R base package `stats`). Distances between alleles are computed as an average length of path connecting all possible allele pairs or trios. As next, we compare the computed distances. If an average distance between alleles within any two pairs is more than `between_homeolog_distance` (the desired threshold, see below)-time shorter than the average distance between alleles within any other possible arrangements, these pairs of alleles are considered to be unequivocally different and attributable to different homeologs. The treatment of each sample is written into a logfile. 
+First, interallelic distances are computed from the branch lengths of the corresponding ML tree (computed by `cophenetic` function of R base package `stats`). Distances between alleles are computed as an average length of path connecting all possible allele pairs or trios. As next, we compare the computed distances. If an average distance between alleles within any two pairs is more than `between_homeolog_distance` (the desired threshold, see below)-time shorter than the average distance between alleles within any other possible arrangements, these pairs of alleles are considered to be unequivocally different and attributable to different homeologs. The treatment of each sample is written into a logfile. 
 
 &nbsp;  
 
@@ -34,20 +34,20 @@ lets set `between_homeolog_distance = 4`
 
 &nbsp;  &nbsp; 
 
-#### Sorting is succesful (uneqivocal) -> attribute to one parent
-If the sorting is successful, we have two pairs. We don't know where they belong, the only thing we know is, that they are sufficiently similar within pairs and different between pairs.  
-The next step is to calculate the distance of each pair to a potential parent (`Parent_A`). The pair closer to `Parent_A` is labelled as homeolog A, and its alleles as A1 and A2 (in random order). Pair more distant is labelled as homeolog B and its alleles as B1 and B2. The "`*** conditions are met`" is written to logfile.  
+#### Sorting is successful (unequivocal) -> attribute to one parent
+If the sorting is successful, we have two pairs. We don't know where they belong (to which subgenomes/parental genomes), the only thing we know is, that they are sufficiently similar within pairs and different between pairs.  
+The next step is to calculate the distance of each pair to a potential parent (`Parent_A`), e.g. the maternal parent suggested from cpDNA phylogeny. The pair closer to `Parent_A` is labelled as homeolog A, and its alleles as A1 and A2 (in random order). The pair more distant is labelled as homeolog B and its alleles as B1 and B2. The "`*** conditions are met`" is written to logfile.  
 Arguments `use_between_parents_distance` (logical) and `between_parents_distance` (numeric) can be used for more precise filtering. If `use_between_parents_distance=TRUE`, homeolog A has to be more than `between_parents_distance` closer to `Parent_A` than to homeolog B, to consider them as unequivocally  sorted.  
 
 &nbsp;  &nbsp;  
 
-#### Sorting is NOT succesful  - mask/remove
+#### Sorting is NOT successful  - mask/remove
 If the sorting is not successful, sample alleles can be masked by using Ns on the positions of intra-allelic SNPs, or removed. Removing unsorted alleles is required for coalescent-based species tree estimation. However, if we are able to concatenate sequences to longer blocks (to genes, for example), partially masked sequences can be concatenated with sorted sequences to prolong alignment length. In this case, partially masked sequences will not disrupt phylogenetic analysis. On the contrary, these sequences can bring better support on the species level.  After concatenation, the allele sorting into two homeologs has to be verified again.  
 
 &nbsp;  &nbsp;  
 
-As a **result**, you will get alignment(s) where suffixes of sequences of sorted samples are renamed to A1, A2, B1 and B2, indicating their belonging to parental genomes. Unsorted samples will be removed if `if_bellow_treshold = "remove"` is used. If you chose to mask instead of removing, unsorted samples will be masked but renamed too, to allow following concatenation. The treatment of each sample is written into logfile.
-The "masking" approach homogenize intra-allelic variation, however, if we are able to contact sequences to longer blocks (to genes, for example), even masked sequences can provide additional support for sample/species-level differentiation.
+As a **result**, you will get alignment(s) where suffixes of sequences of sorted samples are renamed to A1, A2, B1 and B2, indicating their assignment to parental genomes. Unsorted samples will be removed if `if_below_treshold = "remove"` is used. If you chose masking instead of removing, unsorted samples will be masked but renamed as A1, A2, B1 and B2 too, to allow following concatenation. The treatment of each sample is written into logfile.
+The "masking" approach homogenizes inter-allelic variation, however, if we are able to concatenate sequences to longer blocks (to genes, for example), even masked sequences can provide additional support for sample/species-level differentiation.
 The sorting into homeologs has to be verified after concatenation, to confirm unambiguity, or to remove the equivocal sample from the gene alignments.
 
 
@@ -61,7 +61,7 @@ The sorting into homeologs has to be verified after concatenation, to confirm un
 
 
 #### Input files:
-1) Aigned sequences in fasta format  
+1) Aligned sequences in fasta format  
 **tetraploid** samples, which should be sorted to two homeologs have to be named as follow:  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <4xSample>-a1  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <4xSample>-a2  
@@ -71,9 +71,9 @@ The sorting into homeologs has to be verified after concatenation, to confirm un
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `barC007_103-a2`  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `barC007_103-a3`  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `barC007_103-a4`  
-where <4xSample> have to be listed in a sample file (see bullet 3).    
+where <4xSample>s have to be listed in a sample file (see bullet 3).    
 &nbsp;  
-other sequences, or at least sequences of samples belonging to **diploid** Parent A has to be named as:  
+other sequences, or at least sequences of samples belonging to a **diploid** Parent A has to be named as:  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <2xSample>-a1  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <2xSample>-a2  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `ambC014_101-a1`  
@@ -96,7 +96,7 @@ This mapping file should have one line per species, and each line needs to be in
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `amara:ambC014_101,ambC024_103,ammC029_102`  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `matthioli:matGRM9`  
 
-5) An exon/gene list to process. Aligned sequence and phylogenetic tree built from particular sequence have to have the same basis of the file name. This is the list of those names. The script will iterate through this list and take a sequence and corresponding phylogenetic tree.   
+5) An exon/gene list to process. Aligned sequences and the corresponding phylogenetic trees must have the same basis of the file name. This is the list of those names. The script will iterate through this list and take a sequence and corresponding phylogenetic tree.   
 
 
 #### Pipeline Output:
@@ -113,15 +113,15 @@ source('./functions.R')
 Scripts depend on the following list of variables. You have to set them in the `Main.R` script. Please ensure they are set up correctly.  
 * `samples_2x_File`: path to a species mapping file containing a list of **diploid** species and samples (see above).  
 * `samples_4x_File`: path to a file containing a list of **tetraploid** samples, which alleles have to be sorted to homeologs (see above).  
-* `Parent_A`: A one of a potential parent. Species name has to be included in `2xSamplesFile`. Can be represented by multiple samples.  
+* `Parent_A`: one of a potential parent. Species name has to be included in `samples_2x_File`. Can be represented by multiple samples (individuals) as specified in the species mapping file.  
 * `between_homeolog_distance`: two allele pairs are considered to be different homeologs inherited from different parents if the distance between this arrangement of alleles is `between_homeolog_distance`-shorter than the distance of any other possible arrangement.  
 * `use_between_parents_distance` and `between_parents_distance`: can be used for more precise filtering. If `use_between_parents_distance=TRUE`, homeolog A has to be more than `between_parents_distance` closer to Parent_A than to homeolog B, to consider them as unequivocally sorted.  
 
 * `treeDir`: path to a directory containing phylogenetic trees.  
 * `seqDir`: path to a directory containing aligned sequences.  
 * `patterns_exonsFile`, `patterns_genesFile`: An exon/gene list to process.  
-* `if_bellow_treshold`: two options - "remove" or "mask", see above.  
-* `ResDir`: a results dir for sorted sequences and log file.  
+* `if_below_treshold`: two options - "remove" or "mask", see above.  
+* `ResDir`: a results directory for sorted sequences and log file.  
 * `logfile`: the log file, containing a treatment of each sample for each sequence.  
 
 
