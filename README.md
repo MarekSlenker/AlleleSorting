@@ -1,7 +1,7 @@
 # AlleleSorting
 
 
-The R scripts for automated sorting of alleles obtained from polyploid genomes to distinct homeologs as done in [Šlenker et al. 2021](https://www.frontiersin.org/articles/). Currently, we are able to sort alleles of suspected allotetraploids. However, future developments will focus on resolving genomes of higher ploidy levels as well as autopolyploids.
+The R scripts for automated sorting of alleles obtained from polyploid genomes to distinct homeologs as done in [Šlenker et al. 2021](https://www.frontiersin.org/articles/10.3389/fpls.2021.659275). Currently, we are able to sort alleles of suspected allotetraploids. However, future developments will focus on resolving genomes of higher ploidy levels as well as autopolyploids.
 
 
 ## Identifying homeologs inherited from different parents
