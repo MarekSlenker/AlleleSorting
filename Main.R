@@ -70,7 +70,7 @@ for (pattern in patterns_exons$V1) {
 
 
 #  
-# confirmSorting 
+# confirmSorting (!! you will need trees created form CONCATENATED genes)
 #
 
 # set local atguments
@@ -98,7 +98,7 @@ for (pattern in patterns_genes$V1) {
 
 
 #  
-# distanceTable 
+# distanceTable (!! you will need trees created form CONFIRMED genes)
 #
 
 # set local atguments
