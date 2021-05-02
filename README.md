@@ -30,6 +30,7 @@ lets set `between_homeolog_distance = 4`
 **Trees B, C, D:** &nbsp;&nbsp; The shortest distance is not a 4-time shorter than the distance of any other possible arrangement. These alleles cannot be equivocally sorted to homeologs.  
 **Tree E:** &nbsp;&nbsp; The shortest distance was found in a trio, what interrupts any further attempt to find two pairs of distinct alleles.  
 
+**For more details about searching for the optimal `between_homeolog_distance` value, see Supplementary Text 1 (https://www.frontiersin.org/articles/10.3389/fpls.2021.659275/full#supplementary-material).**
 
 
 &nbsp;  &nbsp; 
