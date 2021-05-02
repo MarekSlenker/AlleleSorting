@@ -157,7 +157,7 @@ git clone https://github.com/MarekSlenker/AlleleSorting.git
 
 ### How to cite
 
-**Use the following formula:** Allele sequences were sorted to homeologs using the scripts and following the workflow available at https://github.com/MarekSlenker/AlleleSorting, described in detail by [Šlenker et al. (2021)](https://www.frontiersin.org/articles/).
+**Use the following formula:** Allele sequences were sorted to homeologs using the scripts and following the workflow available at https://github.com/MarekSlenker/AlleleSorting, described in detail by [Šlenker et al. (2021)](https://www.frontiersin.org/articles/10.3389/fpls.2021.659275).
 
 ### Other questions not covered here and reporting problems
 If you have a question or you encounter a problem, feel free to email me at marek.slenker@savba.sk, or use [issues](https://github.com/MarekSlenker/AlleleSorting/issues). I will do my best to help you.
