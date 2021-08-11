@@ -62,7 +62,7 @@ The sorting into homeologs has to be verified after concatenation, to confirm un
 
 
 #### Input files:
-1) Aligned sequences in fasta format  
+1) **Aligned** sequences in fasta format, **all the same length**  
 **tetraploid** samples, which should be sorted to two homeologs have to be named as follow:  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <4xSample>-a1  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <4xSample>-a2  
