@@ -49,7 +49,7 @@ sortAllels <- function(pattern, treeDir, seqDir, resdir, samples2x, samples4x, P
           seq = do_if_below_treshold(if_below_treshold, sample, seq)
           
           # it doesn't matter how, but sequences have to be renamed
-          rownames(seq)[grep(homeolog_A.1, rownames(seq))] = paste(sample, "-A1", sep = ""); rownames(seq)[grep(homeolog_A.2, rownames(seq))] = paste(sample, "-A2", sep = ""); rownames(seq)[grep(homeolog_B.1, rownames(seq))] = paste(sample, "-B1", sep = ""); rownames(seq)[grep(homeolog_B.2, rownames(seq))] = paste(sample, "-B2", sep = "")
+          rownames(seq)[grep(homeolog_A.1, rownames(seq))] = paste(sample, "-B1", sep = ""); rownames(seq)[grep(homeolog_A.2, rownames(seq))] = paste(sample, "-B2", sep = ""); rownames(seq)[grep(homeolog_B.1, rownames(seq))] = paste(sample, "-A1", sep = ""); rownames(seq)[grep(homeolog_B.2, rownames(seq))] = paste(sample, "-A2", sep = "")
           
           toSolve = FALSE
         }
