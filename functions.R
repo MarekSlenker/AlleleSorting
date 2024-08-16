@@ -14,70 +14,72 @@ sortAllels <- function(pattern, treeDir, seqDir, resdir, samples2x, samples4x, P
   distanceTable1 = calculate_a1..a4_Distances(tree, samples4x)
   
   for (sample in samples4x$V1) {
-    
-    homeolog_A.1 = paste(sample, distanceTable1[[sample]]$homeolog_A.1[1], sep = ""); homeolog_A.2 = paste(sample, distanceTable1[[sample]]$homeolog_A.2[1], sep = ""); homeolog_B.1 = paste(sample, distanceTable1[[sample]]$homeolog_B.1[1], sep = "");  homeolog_B.2 = paste(sample, distanceTable1[[sample]]$homeolog_B.2[1], sep = "")
-    
-    
-    if (evaluateDistance (distanceTable1, sample, between_homeolog_distance)) {
+    if (any(grepl(sample, names(distanceTable1)))) {
+
+      homeolog_A.1 = paste(sample, distanceTable1[[sample]]$homeolog_A.1[1], sep = ""); homeolog_A.2 = paste(sample, distanceTable1[[sample]]$homeolog_A.2[1], sep = ""); homeolog_B.1 = paste(sample, distanceTable1[[sample]]$homeolog_B.1[1], sep = "");  homeolog_B.2 = paste(sample, distanceTable1[[sample]]$homeolog_B.2[1], sep = "")
       
-      dt_2 = distancesToParentsList(tree, homeolog_A.1, homeolog_A.2, homeolog_B.1, homeolog_B.2, Parent_A_list)
       
-      toSolve = TRUE
-      if ( dt_2$dist_A_to_parent < dt_2$dist_B_to_parent ) {
-        # use_between_parents_distance?
-        if (use_between_parents_distance & (dt_2$ratio < between_parents_distance)){
-          tocat = c(tocat, "masked/removed", "\t")
-          
-          seq = do_if_below_treshold(if_below_treshold, sample, seq)
-          # it doesn't matter how, but sequences have to be renamed
-          rownames(seq)[grep(homeolog_A.1, rownames(seq))] = paste(sample, "-A1", sep = ""); rownames(seq)[grep(homeolog_A.2, rownames(seq))] = paste(sample, "-A2", sep = ""); rownames(seq)[grep(homeolog_B.1, rownames(seq))] = paste(sample, "-B1", sep = ""); rownames(seq)[grep(homeolog_B.2, rownames(seq))] = paste(sample, "-B2", sep = "")
-          
-          toSolve = FALSE
-        }
-        if (toSolve) {
-          tocat = c(tocat, "*** conditions are met", "\t")
-          
-          colnames(dt_2) = c("A_homeolog", "B_homeolog", "ratio")
-          # rename fasta sequence
-          rownames(seq)[grep(homeolog_A.1, rownames(seq))] = paste(sample, "-A1", sep = ""); rownames(seq)[grep(homeolog_A.2, rownames(seq))] = paste(sample, "-A2", sep = ""); rownames(seq)[grep(homeolog_B.1, rownames(seq))] = paste(sample, "-B1", sep = ""); rownames(seq)[grep(homeolog_B.2, rownames(seq))] = paste(sample, "-B2", sep = "")
-        }
-      } else if (dt_2$dist_A_to_parent > dt_2$dist_B_to_parent ){
-        # use_between_parents_distance ?
-        if (use_between_parents_distance & (dt_2$ratio < between_parents_distance)){
-          tocat = c(tocat, "masked/removed", "\t")
-          
-          seq = do_if_below_treshold(if_below_treshold, sample, seq)
-          
-          # it doesn't matter how, but sequences have to be renamed
-          rownames(seq)[grep(homeolog_A.1, rownames(seq))] = paste(sample, "-B1", sep = ""); rownames(seq)[grep(homeolog_A.2, rownames(seq))] = paste(sample, "-B2", sep = ""); rownames(seq)[grep(homeolog_B.1, rownames(seq))] = paste(sample, "-A1", sep = ""); rownames(seq)[grep(homeolog_B.2, rownames(seq))] = paste(sample, "-A2", sep = "")
-          
-          toSolve = FALSE
-        }
-        if (toSolve) {
-          tocat = c(tocat, "*** conditions are met", "\t")
-          
-          colnames(dt_2) = c("B_homeolog", "A_homeolog", "ratio") 
-          # rename fasta sequence
-          rownames(seq)[grep(homeolog_A.1, rownames(seq))] = paste(sample, "-B1", sep = ""); rownames(seq)[grep(homeolog_A.2, rownames(seq))] = paste(sample, "-B2", sep = ""); rownames(seq)[grep(homeolog_B.1, rownames(seq))] = paste(sample, "-A1", sep = ""); rownames(seq)[grep(homeolog_B.2, rownames(seq))] = paste(sample, "-A2", sep = "")
-        }
-      
-      } else {
-        tocat = c(tocat, "masked/removed", "\t")
-        seq = do_if_below_treshold(if_below_treshold, sample, seq)
+      if (evaluateDistance (distanceTable1, sample, between_homeolog_distance)) {
         
-        rownames(seq)[grep(homeolog_A.1, rownames(seq))] = paste(sample, "-A1", sep = ""); rownames(seq)[grep(homeolog_A.2, rownames(seq))] = paste(sample, "-A2", sep = ""); rownames(seq)[grep(homeolog_B.1, rownames(seq))] = paste(sample, "-B1", sep = ""); rownames(seq)[grep(homeolog_B.2, rownames(seq))] = paste(sample, "-B2", sep = "")
+        dt_2 = distancesToParentsList(tree, homeolog_A.1, homeolog_A.2, homeolog_B.1, homeolog_B.2, Parent_A_list)
+        
+        toSolve = TRUE
+        if ( dt_2$dist_A_to_parent < dt_2$dist_B_to_parent ) {
+          # use_between_parents_distance?
+          if (use_between_parents_distance & (dt_2$ratio < between_parents_distance)){
+            tocat = c(tocat, "masked/removed", "\t")
+            
+            seq = do_if_below_treshold(if_below_treshold, sample, seq)
+            # it doesn't matter how, but sequences have to be renamed
+            rownames(seq)[grep(homeolog_A.1, rownames(seq))] = paste(sample, "-A1", sep = ""); rownames(seq)[grep(homeolog_A.2, rownames(seq))] = paste(sample, "-A2", sep = ""); rownames(seq)[grep(homeolog_B.1, rownames(seq))] = paste(sample, "-B1", sep = ""); rownames(seq)[grep(homeolog_B.2, rownames(seq))] = paste(sample, "-B2", sep = "")
+            
+            toSolve = FALSE
+          }
+          if (toSolve) {
+            tocat = c(tocat, "*** conditions are met", "\t")
+            
+            colnames(dt_2) = c("A_homeolog", "B_homeolog", "ratio")
+            # rename fasta sequence
+            rownames(seq)[grep(homeolog_A.1, rownames(seq))] = paste(sample, "-A1", sep = ""); rownames(seq)[grep(homeolog_A.2, rownames(seq))] = paste(sample, "-A2", sep = ""); rownames(seq)[grep(homeolog_B.1, rownames(seq))] = paste(sample, "-B1", sep = ""); rownames(seq)[grep(homeolog_B.2, rownames(seq))] = paste(sample, "-B2", sep = "")
+          }
+        } else if (dt_2$dist_A_to_parent > dt_2$dist_B_to_parent ){
+          # use_between_parents_distance ?
+          if (use_between_parents_distance & (dt_2$ratio < between_parents_distance)){
+            tocat = c(tocat, "masked/removed", "\t")
+            
+            seq = do_if_below_treshold(if_below_treshold, sample, seq)
+            
+            # it doesn't matter how, but sequences have to be renamed
+            rownames(seq)[grep(homeolog_A.1, rownames(seq))] = paste(sample, "-B1", sep = ""); rownames(seq)[grep(homeolog_A.2, rownames(seq))] = paste(sample, "-B2", sep = ""); rownames(seq)[grep(homeolog_B.1, rownames(seq))] = paste(sample, "-A1", sep = ""); rownames(seq)[grep(homeolog_B.2, rownames(seq))] = paste(sample, "-A2", sep = "")
+            
+            toSolve = FALSE
+          }
+          if (toSolve) {
+            tocat = c(tocat, "*** conditions are met", "\t")
+            
+            colnames(dt_2) = c("B_homeolog", "A_homeolog", "ratio") 
+            # rename fasta sequence
+            rownames(seq)[grep(homeolog_A.1, rownames(seq))] = paste(sample, "-B1", sep = ""); rownames(seq)[grep(homeolog_A.2, rownames(seq))] = paste(sample, "-B2", sep = ""); rownames(seq)[grep(homeolog_B.1, rownames(seq))] = paste(sample, "-A1", sep = ""); rownames(seq)[grep(homeolog_B.2, rownames(seq))] = paste(sample, "-A2", sep = "")
+          }
+        
+        } else {
+          tocat = c(tocat, "masked/removed", "\t")
+          seq = do_if_below_treshold(if_below_treshold, sample, seq)
+          
+          rownames(seq)[grep(homeolog_A.1, rownames(seq))] = paste(sample, "-A1", sep = ""); rownames(seq)[grep(homeolog_A.2, rownames(seq))] = paste(sample, "-A2", sep = ""); rownames(seq)[grep(homeolog_B.1, rownames(seq))] = paste(sample, "-B1", sep = ""); rownames(seq)[grep(homeolog_B.2, rownames(seq))] = paste(sample, "-B2", sep = "")
+        }
+      
+      } else { # evaluateDistance = FALSE
+        
+        tocat = c(tocat, "masked/removed", "\t")
+        
+        seq = do_if_below_treshold(if_below_treshold, sample, seq)
+        rownames(seq)[grep(paste(sample, "-a1", sep = ""), rownames(seq))] = paste(sample, "-A1", sep = ""); rownames(seq)[grep(paste(sample, "-a2", sep = ""), rownames(seq))] = paste(sample, "-A2", sep = ""); rownames(seq)[grep(paste(sample, "-a3", sep = ""), rownames(seq))] = paste(sample, "-B1", sep = ""); rownames(seq)[grep(paste(sample, "-a4", sep = ""), rownames(seq))] = paste(sample, "-B2", sep = "")
       }
-    
-    } else { # evaluateDistance = FALSE
-      
-      tocat = c(tocat, "masked/removed", "\t")
-      
-      seq = do_if_below_treshold(if_below_treshold, sample, seq)
-      rownames(seq)[grep(paste(sample, "-a1", sep = ""), rownames(seq))] = paste(sample, "-A1", sep = ""); rownames(seq)[grep(paste(sample, "-a2", sep = ""), rownames(seq))] = paste(sample, "-A2", sep = ""); rownames(seq)[grep(paste(sample, "-a3", sep = ""), rownames(seq))] = paste(sample, "-B1", sep = ""); rownames(seq)[grep(paste(sample, "-a4", sep = ""), rownames(seq))] = paste(sample, "-B2", sep = "")
-    }
-      
-    
-    
+    } else {
+      tocat = c(tocat, "missing", "\t")
+    }  
+        
     ###########x
 #    returnedList = evaluateDistance_sortSequence(distanceTable1, sample, between_homeolog_distance, tree, Parent_A_list, use_between_parents_distance, between_parents_distance, tocat, if_below_treshold, seq, homeolog_A.1, homeolog_A.2, homeolog_B.1,  homeolog_B.2)
 #    seq = returnedList[[1]]
@@ -226,26 +228,28 @@ calculate_a1..a4_Distances <- function(tree, samples4x) {
   
   for (sample in samples4x$V1) {
     sh1 = paste(sample, "-a1", sep = "");   sh2 = paste(sample, "-a2", sep = "");   sh3 = paste(sample, "-a3", sep = "");   sh4 = paste(sample, "-a4", sep = "")
+    if (any(grepl(sample, colnames(dist))))
+    {
+        dist12_34 = (dist[sh1,sh2] + dist[sh3,sh4])/2
+        dist13_24 = (dist[sh1,sh3] + dist[sh2,sh4])/2
+        dist14_23 = (dist[sh1,sh4] + dist[sh2,sh3])/2
+        dist123 = (dist[sh1,sh2] + dist[sh1,sh3] + dist[sh2,sh3])/3 
+        dist124 = (dist[sh1,sh2] + dist[sh1,sh4] + dist[sh2,sh4])/3 
+        dist134 = (dist[sh1,sh3] + dist[sh1,sh4] + dist[sh4,sh3])/3 
+        dist234 = (dist[sh3,sh2] + dist[sh4,sh3] + dist[sh2,sh4])/3 
+        
+        distTable_sample = data.frame(names=c("dist12_34", "dist13_24", "dist14_23", "dist123", "dist124", "dist134", "dist234"),
+                                      dist = c(dist12_34, dist13_24, dist14_23, dist123, dist124, dist134, dist234),
+                                      twoOrThree = c("2pairs", "2pairs", "2pairs", "trio", "trio", "trio", "trio"),
+                                      homeolog_A.1 = c("-a1", "-a1", "-a1", NA, NA, NA, NA),
+                                      homeolog_A.2 = c("-a2", "-a3", "-a4", NA, NA, NA, NA),
+                                      homeolog_B.1 = c("-a3", "-a2", "-a2", NA, NA, NA, NA),
+                                      homeolog_B.2 = c("-a4", "-a4", "-a3", NA, NA, NA, NA)
+                                      
+        )
     
-    dist12_34 = (dist[sh1,sh2] + dist[sh3,sh4])/2
-    dist13_24 = (dist[sh1,sh3] + dist[sh2,sh4])/2
-    dist14_23 = (dist[sh1,sh4] + dist[sh2,sh3])/2
-    dist123 = (dist[sh1,sh2] + dist[sh1,sh3] + dist[sh2,sh3])/3 
-    dist124 = (dist[sh1,sh2] + dist[sh1,sh4] + dist[sh2,sh4])/3 
-    dist134 = (dist[sh1,sh3] + dist[sh1,sh4] + dist[sh4,sh3])/3 
-    dist234 = (dist[sh3,sh2] + dist[sh4,sh3] + dist[sh2,sh4])/3 
-    
-    distTable_sample = data.frame(names=c("dist12_34", "dist13_24", "dist14_23", "dist123", "dist124", "dist134", "dist234"),
-                                  dist = c(dist12_34, dist13_24, dist14_23, dist123, dist124, dist134, dist234),
-                                  twoOrThree = c("2pairs", "2pairs", "2pairs", "trio", "trio", "trio", "trio"),
-                                  homeolog_A.1 = c("-a1", "-a1", "-a1", NA, NA, NA, NA),
-                                  homeolog_A.2 = c("-a2", "-a3", "-a4", NA, NA, NA, NA),
-                                  homeolog_B.1 = c("-a3", "-a2", "-a2", NA, NA, NA, NA),
-                                  homeolog_B.2 = c("-a4", "-a4", "-a3", NA, NA, NA, NA)
-                                  
-    )
-    
-    distTable[sample] = list( distTable_sample[order(distTable_sample$dist),])
+        distTable[sample] = list( distTable_sample[order(distTable_sample$dist),])
+      }
   }
   
   return(distTable)
@@ -274,24 +278,31 @@ distancesToParentsList <- function(tree, homeolog_A.1, homeolog_A.2, homeolog_B.
     rownames(parentSamplesDistTable) = parentSamples
     
     for (parentSample in parentSamples) {
-      dist_A1_parent_a1 = dist[homeolog_A.1 , paste(parentSample, "-a1", sep = "")]
-      dist_A1_parent_a2 = dist[homeolog_A.1 , paste(parentSample, "-a2", sep = "")]
-      dist_A2_parent_a1 = dist[homeolog_A.2 , paste(parentSample, "-a1", sep = "")]
-      dist_A2_parent_a2 = dist[homeolog_A.2 , paste(parentSample, "-a2", sep = "")]
-      
-      dist_B1_parent_a1 = dist[homeolog_B.1 , paste(parentSample, "-a1", sep = "")]
-      dist_B1_parent_a2 = dist[homeolog_B.1 , paste(parentSample, "-a2", sep = "")]
-      dist_B2_parent_a1 = dist[homeolog_B.2 , paste(parentSample, "-a1", sep = "")]
-      dist_B2_parent_a2 = dist[homeolog_B.2 , paste(parentSample, "-a2", sep = "")]
-      
-      parentSamplesDistTable[which(parentSample == parentSamples), 1] = mean( c( dist_A1_parent_a1, dist_A1_parent_a2, dist_A2_parent_a1, dist_A2_parent_a2)) 
-      parentSamplesDistTable[which(parentSample == parentSamples), 2] = mean( c( dist_B1_parent_a1, dist_B1_parent_a2, dist_B2_parent_a1, dist_B2_parent_a2)) 
-      parentSamplesDistTable[which(parentSample == parentSamples), 3] = max(parentSamplesDistTable[which(parentSample == parentSamples), 2], parentSamplesDistTable[which(parentSample == parentSamples), 1])/min(parentSamplesDistTable[which(parentSample == parentSamples), 2], parentSamplesDistTable[which(parentSample == parentSamples), 1])    
-    }
-    
-    distTable_2[parent,]$dist_A_to_parent = mean(parentSamplesDistTable$dist_A_to_parent)
-    distTable_2[parent,]$dist_B_to_parent = mean(parentSamplesDistTable$dist_B_to_parent)  
-    distTable_2[parent,]$ratio = mean(parentSamplesDistTable$ratio)  
+      if (any(grepl(parentSample, colnames(dist)))){
+
+          dist_A1_parent_a1 = dist[homeolog_A.1 , paste(parentSample, "-a1", sep = "")]
+          dist_A1_parent_a2 = dist[homeolog_A.1 , paste(parentSample, "-a2", sep = "")]
+          dist_A2_parent_a1 = dist[homeolog_A.2 , paste(parentSample, "-a1", sep = "")]
+          dist_A2_parent_a2 = dist[homeolog_A.2 , paste(parentSample, "-a2", sep = "")]
+          
+          dist_B1_parent_a1 = dist[homeolog_B.1 , paste(parentSample, "-a1", sep = "")]
+          dist_B1_parent_a2 = dist[homeolog_B.1 , paste(parentSample, "-a2", sep = "")]
+          dist_B2_parent_a1 = dist[homeolog_B.2 , paste(parentSample, "-a1", sep = "")]
+          dist_B2_parent_a2 = dist[homeolog_B.2 , paste(parentSample, "-a2", sep = "")]
+          
+          parentSamplesDistTable[which(parentSample == parentSamples), 1] = mean( c( dist_A1_parent_a1, dist_A1_parent_a2, dist_A2_parent_a1, dist_A2_parent_a2)) 
+          parentSamplesDistTable[which(parentSample == parentSamples), 2] = mean( c( dist_B1_parent_a1, dist_B1_parent_a2, dist_B2_parent_a1, dist_B2_parent_a2)) 
+          parentSamplesDistTable[which(parentSample == parentSamples), 3] = max(parentSamplesDistTable[which(parentSample == parentSamples), 2], parentSamplesDistTable[which(parentSample == parentSamples), 1])/min(parentSamplesDistTable[which(parentSample == parentSamples), 2], parentSamplesDistTable[which(parentSample == parentSamples), 1])    
+        } else
+        {
+        parentSamplesDistTable[which(parentSample == parentSamples), 1] = NaN
+        parentSamplesDistTable[which(parentSample == parentSamples), 2] = NaN
+        parentSamplesDistTable[which(parentSample == parentSamples), 3] = NaN
+        }
+      }
+    distTable_2[parent,]$dist_A_to_parent = mean(parentSamplesDistTable$dist_A_to_parent, na.rm = T)
+    distTable_2[parent,]$dist_B_to_parent = mean(parentSamplesDistTable$dist_B_to_parent, na.rm = T)  
+    distTable_2[parent,]$ratio = mean(parentSamplesDistTable$ratio, na.rm = T)  
   }
   
   return(distTable_2)
