@@ -292,7 +292,7 @@ distancesToParentsList <- function(tree, homeolog_A.1, homeolog_A.2, homeolog_B.
           
           parentSamplesDistTable[which(parentSample == parentSamples), 1] = mean( c( dist_A1_parent_a1, dist_A1_parent_a2, dist_A2_parent_a1, dist_A2_parent_a2)) 
           parentSamplesDistTable[which(parentSample == parentSamples), 2] = mean( c( dist_B1_parent_a1, dist_B1_parent_a2, dist_B2_parent_a1, dist_B2_parent_a2)) 
-          parentSamplesDistTable[which(parentSample == parentSamples), 3] = max(parentSamplesDistTable[which(parentSample == parentSamples), 2], parentSamplesDistTable[which(parentSample == parentSamples), 1])/min(parentSamplesDistTable[which(parentSample == parentSamples), 2], parentSamplesDistTable[which(parentSample == parentSamples), 1])    
+          parentSamplesDistTable[which(parentSample == parentSamples), 3] = parentSamplesDistTable[which(parentSample == parentSamples), 2]/parentSamplesDistTable[which(parentSample == parentSamples), 1]
         } else
         {
         parentSamplesDistTable[which(parentSample == parentSamples), 1] = NaN
