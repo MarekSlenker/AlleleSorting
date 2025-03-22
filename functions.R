@@ -201,7 +201,7 @@ calculate_AB_Distances <- function(tree, samples4x) {
     
     
     #distTable_1[which(sample == samples4x$V1)] = list(distTable_sample)
-    distTable_1[sample] = list( distTable_sample[order(distTable_sample$dist),])
+    distTable_1[sample] = list( distTable_sample[order(distTable_sample$dist, distTable_sample$twoOrThree),])
   }
   
   return(distTable_1)
@@ -248,7 +248,7 @@ calculate_a1..a4_Distances <- function(tree, samples4x) {
                                       
         )
     
-        distTable[sample] = list( distTable_sample[order(distTable_sample$dist),])
+        distTable[sample] = list( distTable_sample[order(distTable_sample$dist, distTable_sample$twoOrThree),])
       }
   }
   
@@ -310,27 +310,27 @@ distancesToParentsList <- function(tree, homeolog_A.1, homeolog_A.2, homeolog_B.
   
   
   
-  #-------------------------------------
-  for (parent in Parent_A) {
-    #break
-    dist_A1_parent_h1 = dist[homeolog_A.1 , paste(parent, "-a1", sep = "")]
-    dist_A1_parent_h2 = dist[homeolog_A.1 , paste(parent, "-a2", sep = "")]
-    dist_A2_parent_h1 = dist[homeolog_A.2 , paste(parent, "-a1", sep = "")]
-    dist_A2_parent_h2 = dist[homeolog_A.2 , paste(parent, "-a2", sep = "")]
+  #-------------astral------------------------
+  # for (parent in Parent_A) {
+  #   #break
+  #   dist_A1_parent_h1 = dist[homeolog_A.1 , paste(parent, "-a1", sep = "")]
+  #   dist_A1_parent_h2 = dist[homeolog_A.1 , paste(parent, "-a2", sep = "")]
+  #   dist_A2_parent_h1 = dist[homeolog_A.2 , paste(parent, "-a1", sep = "")]
+  #   dist_A2_parent_h2 = dist[homeolog_A.2 , paste(parent, "-a2", sep = "")]
     
-    dist_B1_parent_h1 = dist[homeolog_B.1 , paste(parent, "-a1", sep = "")]
-    dist_B1_parent_h2 = dist[homeolog_B.1 , paste(parent, "-a2", sep = "")]
-    dist_B2_parent_h1 = dist[homeolog_B.2 , paste(parent, "-a1", sep = "")]
-    dist_B2_parent_h2 = dist[homeolog_B.2 , paste(parent, "-a2", sep = "")]
+  #   dist_B1_parent_h1 = dist[homeolog_B.1 , paste(parent, "-a1", sep = "")]
+  #   dist_B1_parent_h2 = dist[homeolog_B.1 , paste(parent, "-a2", sep = "")]
+  #   dist_B2_parent_h1 = dist[homeolog_B.2 , paste(parent, "-a1", sep = "")]
+  #   dist_B2_parent_h2 = dist[homeolog_B.2 , paste(parent, "-a2", sep = "")]
     
-    distTable[parent,]$dist_A_to_parent = mean(dist_A1_parent_h1, dist_A1_parent_h2, dist_A2_parent_h1, dist_A2_parent_h2)
-    distTable[parent,]$dist_B_to_parent = mean(dist_B1_parent_h1, dist_B1_parent_h2, dist_B2_parent_h1, dist_B2_parent_h2)
-    distTable[parent,]$ratio = max(distTable[parent,]$dist_A_to_parent, distTable[parent,]$dist_B_to_parent)/min(distTable[parent,]$dist_A_to_parent, distTable[parent,]$dist_B_to_parent)  
-  }
+  #   distTable[parent,]$dist_A_to_parent = mean(dist_A1_parent_h1, dist_A1_parent_h2, dist_A2_parent_h1, dist_A2_parent_h2)
+  #   distTable[parent,]$dist_B_to_parent = mean(dist_B1_parent_h1, dist_B1_parent_h2, dist_B2_parent_h1, dist_B2_parent_h2)
+  #   distTable[parent,]$ratio = max(distTable[parent,]$dist_A_to_parent, distTable[parent,]$dist_B_to_parent)/min(distTable[parent,]$dist_A_to_parent, distTable[parent,]$dist_B_to_parent)  
+  # }
   
-  dt_2 = apply(distTable, 2, mean)
-  dt_2 = t(dt_2)
-  return(dt_2)
+  # dt_2 = apply(distTable, 2, mean)
+  # dt_2 = t(dt_2)
+  # return(dt_2)
 }
 
 distancesToParents <- function(tree, homeolog_A.1, homeolog_A.2, homeolog_B.1, homeolog_B.2, Parent_A) {
